@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Bloc 2 - Les fondamentaux ESG</title>
+
+  <style>
+    :root {
+      --vert-fonce: #2e7d32;
+      --vert-clair: #a5d6a7;
+      --beige: #f3efe4;
+      --ombre: rgba(0,0,0,0.15);
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: var(--beige);
+      background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: var(--vert-fonce);
+    }
+
+    .consigne {
+      max-width: 900px;
+      margin: 0 auto 20px auto;
+      font-size: 1.1rem;
+      background: #ffffffaa;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px var(--ombre);
+    }
+
+    .zone-activite {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .liste-etiquettes, .zone-cibles {
+      background-color: #ffffffdd;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px var(--ombre);
+    }
+
+    .etiquette {
+      padding: 8px 12px;
+      margin: 6px 0;
+      background-color: #dcedff;
+      border-radius: 6px;
+      cursor: grab;
+      border: 1px solid #90b8d8;
+      transition: 0.2s;
+    }
+
+    .etiquette:hover {
+      transform: scale(1.05);
+      background-color: #cbe7ff;
+    }
+
+    /* CERCLES AGRANDIS */
+    .cercle {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 4px solid var(--vert-fonce);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px;
+      background-size: cover;
+      background-position: center;
+      color: #ffffff;
+      box-shadow: 0 0 10px var(--ombre);
+    }
+
+    .cercle .contenu-cercle {
+      flex: 1;
+      width: 100%;
+      overflow-y: auto;
+      padding: 5px;
+    }
+
+    .cercle.survol {
+      border-color: #66bb6a;
+      box-shadow: 0 0 15px #66bb6a;
+      transform: scale(1.03);
+    }
+
+    /* IMAGES DE FOND */
+    .cercle[data-cible="economie"] {
+      background-image: url("https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=60");
+    }
+    .cercle[data-cible="social"] {
+      background-image: url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=60");
+    }
+    .cercle[data-cible="environnement"] {
+      background-image: url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=60");
+    }
+
+    /* MESSAGE VISUEL */
+    #zone-resultat {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #zone-resultat img {
+      width: 180px;
+      margin-bottom: 10px;
+    }
+
+    #zone-resultat .texte-resultat {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--vert-fonce);
+    }
+
+    .boutons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 18px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .btn-verifier {
+      background-color: var(--vert-fonce);
+      color: #ffffff;
+    }
+
+    .btn-reset {
+      background-color: #8d6e63;
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Bloc 2 : Les fondamentaux</h1>
+  <h2>Activité "Cliquer-Glisser"</h2>
+
+  <div class="consigne">
+    Placez chaque étiquette dans le bon cercle : <strong>Économie</strong>, <strong>Social</strong> ou <strong>Environnement</strong>.
+  </div>
+
+  <div class="zone-activite">
+
+    <!-- LISTE DES ETIQUETTES -->
+    <div class="liste-etiquettes" id="liste-etiquettes">
+      <h3>Étiquettes à placer</h3>
+
+      <!-- Économie -->
+      <div class="etiquette" draggable="true" data-categorie="economie">Profit</div>
+      <div class="etiquette" draggable="true" data-categorie="economie">Innovation</div>
+      <div class="etiquette" draggable="true" data-categorie="economie">Compétitivité</div>
+      <div class="etiquette" draggable="true" data-categorie="economie">Croissance verte</div>
+      <div class="etiquette" draggable="true" data-categorie="economie">Investissements responsables</div>
+      <div class="etiquette" draggable="true" data-categorie="economie">Économie circulaire</div>
+      <div class="etiquette" draggable="true" data-categorie="economie">Productivité</div>
+      <div class="etiquette" draggable="true" data-categorie="economie">Développement local</div>
+
+      <!-- Social -->
+      <div class="etiquette" draggable="true" data-categorie="social">Santé</div>
+      <div class="etiquette" draggable="true" data-categorie="social">Éducation</div>
+      <div class="etiquette" draggable="true" data-categorie="social">Inclusion sociale</div>
+      <div class="etiquette" draggable="true" data-categorie="social">Conditions de travail</div>
+      <div class="etiquette" draggable="true" data-categorie="social">Droits humains</div>
+      <div class="etiquette" draggable="true" data-categorie="social">Sécurité au travail</div>
+      <div class="etiquette" draggable="true" data-categorie="social">Lutte contre la pauvreté</div>
+      <div class="etiquette" draggable="true" data-categorie="social">Qualité de vie</div>
+
+      <!-- Environnement -->
+      <div class="etiquette" draggable="true" data-categorie="environnement">Climat</div>
+      <div class="etiquette" draggable="true" data-categorie="environnement">Biodiversité</div>
+      <div class="etiquette" draggable="true" data-categorie="environnement">Pollution de l’air</div>
+      <div class="etiquette" draggable="true" data-categorie="environnement">Gestion des déchets</div>
+      <div class="etiquette" draggable="true" data-categorie="environnement">Énergies renouvelables</div>
+      <div class="etiquette" draggable="true" data-categorie="environnement">Empreinte carbone</div>
+      <div class="etiquette" draggable="true" data-categorie="environnement">Préservation des sols</div>
+      <div class="etiquette" draggable="true" data-categorie="environnement">Recyclage</div>
+    </div>
+
+    <!-- CERCLES -->
+    <div class="zone-cibles">
+
+      <div class="cercle" data-cible="economie">
+        <h3>Économie</h3>
+        <p>Placez ici les étiquettes liées à l’économie.</p>
+        <div class="contenu-cercle"></div>
+      </div>
+
+      <div class="cercle" data-cible="social">
+        <h3>Social</h3>
+        <p>Placez ici les étiquettes liées au social.</p>
+        <div class="contenu-cercle"></div>
+      </div>
+
+      <div class="cercle" data-cible="environnement">
+        <h3>Environnement</h3>
+        <p>Placez ici les étiquettes liées à l’environnement.</p>
+        <div class="contenu-cercle"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="boutons">
+    <button type="button" class="btn-verifier" id="btn-verifier">Vérifier</button>
+    <button type="button" class="btn-reset" id="btn-reset">Réinitialiser</button>
+  </div>
+
+  <!-- MESSAGE VISUEL -->
+  <div id="zone-resultat"></div>
+
+  <script>
+    (function () {
+      var etiquettes = document.querySelectorAll(".etiquette");
+      var cercles = document.querySelectorAll(".cercle");
+      var listeEtiquettes = document.getElementById("liste-etiquettes");
+      var boutonVerifier = document.getElementById("btn-verifier");
+      var boutonReset = document.getElementById("btn-reset");
+      var etiquetteEnCours = null;
+
+      etiquettes.forEach(function (etiquette) {
+        etiquette.addEventListener("dragstart", function (event) {
+          etiquetteEnCours = event.target;
+          event.dataTransfer.setData("text/plain", event.target.textContent);
+        });
+
+        etiquette.addEventListener("dragend", function () {
+          etiquetteEnCours = null;
+        });
+      });
+
+      cercles.forEach(function (cercle) {
+        cercle.addEventListener("dragover", function (event) {
+          event.preventDefault();
+          cercle.classList.add("survol");
+        });
+
+        cercle.addEventListener("dragleave", function () {
+          cercle.classList.remove("survol");
+        });
+
+        cercle.addEventListener("drop", function (event) {
+          event.preventDefault();
+          cercle.classList.remove("survol");
+          if (etiquetteEnCours) {
+            var contenuCercle = cercle.querySelector(".contenu-cercle");
+            contenuCercle.appendChild(etiquetteEnCours);
+          }
+        });
+      });
+
+      listeEtiquettes.addEventListener("dragover", function (event) {
+        event.preventDefault();
+      });
+
+      listeEtiquettes.addEventListener("drop", function (event) {
+        event.preventDefault();
+        if (etiquetteEnCours) {
+          listeEtiquettes.appendChild(etiquetteEnCours);
+        }
+      });
+
+      // Vérification
+      boutonVerifier.addEventListener("click", function () {
+        var tousCorrects = true;
+        var totalEtiquettes = document.querySelectorAll(".etiquette").length;
+        var etiquettesPlacees = 0;
+
+        cercles.forEach(function (cercle) {
+          var categorieCible = cercle.getAttribute("data-cible");
+          var contenuCercle = cercle.querySelector(".contenu-cercle");
+          var etiquettesDansCercle = contenuCercle.querySelectorAll(".etiquette");
+
+          etiquettesPlacees += etiquettesDansCercle.length;
+
+          etiquettesDansCercle.forEach(function (etiquette) {
+            var categorieEtiquette = etiquette.getAttribute("data-categorie");
+            if (categorieEtiquette !== categorieCible) {
+              tousCorrects = false;
+            }
+          });
+        });
+
+        var zoneResultat = document.getElementById("zone-resultat");
+        zoneResultat.innerHTML = "";
+
+        if (etiquettesPlacees !== totalEtiquettes) {
+          zoneResultat.innerHTML = "<p class='texte-resultat'>Place toutes les étiquettes avant de vérifier.</p>";
+          return;
+        }
+
+        if (tousCorrects) {
+          zoneResultat.innerHTML = `
+            <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=400&q=60">
+            <div class="texte-resultat">Bravo !</div>
+          `;
+        } else {
+          zoneResultat.innerHTML = `
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=60">
+            <div class="texte-resultat">Essaye encore</div>
+          `;
+        }
+      });
+
+      // Reset
+      boutonReset.addEventListener("click", function () {
+        var toutesEtiquettes = document.querySelectorAll(".etiquette");
+        toutesEtiquettes.forEach(function (etiquette) {
+          listeEtiquettes.appendChild(etiquette);
+        });
+        document.getElementById("zone-resultat").innerHTML = "";
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
